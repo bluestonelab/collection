@@ -50,7 +50,7 @@ class Collection implements ArrayAccess, Countable, JsonSerializable
     public function jsonSerialize(): array
     {
         return array_map(function ($value) {
-            return match(true) {
+            return match (true) {
                 $value instanceof JsonSerializable => $value->jsonSerialize(),
                 default => $value,
             };
