@@ -7,11 +7,41 @@ use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends TestCase
 {
-    /** @test */
-    public function can_say_hello()
+    /**
+     * @test
+     * @dataProvider setOfArrays
+     */
+    public function can_get_value($items, $expected, $key, $default = null)
     {
-        $collection = new Collection();
+        $collection = new Collection($items);
 
-        $this->assertEquals('Hello !', $collection->sayHello());
+        $this->assertEquals($expected, $collection->get($key, $default));
+    }
+
+    protected function setOfArrays(): array
+    {
+        return [
+            'Named key' => [
+                ['name' => 'John'],
+                'John',
+                'name',
+            ],
+            'Default value' => [
+                [],
+                'Undefined',
+                'name',
+                'Undefined',
+            ],
+            'Number key' => [
+                ['Hello'],
+                'Hello',
+                0,
+            ],
+            'Dot notation' => [
+                ['user' => ['name' => 'Jane']],
+                'Jane',
+                'user.name',
+            ]
+        ];
     }
 }

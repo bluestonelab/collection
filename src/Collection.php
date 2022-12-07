@@ -4,8 +4,13 @@ namespace Bluestone\Collection;
 
 class Collection
 {
-    public function sayHello(): string
+    public function __construct(
+        protected $items = []
+    ) {
+    }
+
+    public function get($key, $default = null): string
     {
-        return "Hello !";
+        return Arr::get($this->items, $key, $default);
     }
 }
